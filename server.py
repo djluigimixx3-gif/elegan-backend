@@ -1,0 +1,27 @@
+from flask import Flask, request, jsonify
+
+app = Flask(__name__)
+
+data_store = {
+    "online": False,
+    "playersCount": 0,
+    "players": []
+}
+
+@app.route("/")
+def home():
+    return "Backend funcionando"
+
+@app.route("/api/update_players", methods=["POST"])
+def update_players():
+    global data_store
+    data = request.json
+
+    if data:
+        data_store = data
+        return jsonify({"status": "ok"})
+    return jsonify({"status": "error"})
+
+@app.route("/api/status", methods=["GET"])
+def status():
+    return jsonify(data_store)
