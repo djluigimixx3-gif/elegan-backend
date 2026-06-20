@@ -1,0 +1,22 @@
+workflows:
+  android-workflow:
+    name: ELEGAN V3 Android
+    max_build_duration: 60
+    instance_type: mac_mini_m1
+    environment:
+      node: 18
+      java: 17
+    scripts:
+      - name: Install npm dependencies
+        script: |
+          npm install
+      - name: Build Android release
+        script: |
+          cd android
+          ./gradlew assembleRelease
+    artifacts:
+      - android/app/build/outputs/**/*.apk
+    publishing:
+      email:
+        recipients:
+          - djluigimixx3@gmail.com
